@@ -1,0 +1,101 @@
+<div>
+   <h2>
+      Question 3
+   </h2>
+   {% for item in list %}
+   {{ item.Titre|upper }} |
+   {% endfor %}
+   <br />
+   <h2>
+      Question 4
+   </h2>
+   {{ list|length }} formations
+   <h2>
+      Question 5
+   </h2>
+   {% for title in list|filter(formation => formation.Description == "formation theorique")|map(formation => formation.Titre) %}
+   {{ title }} |
+   {% endfor %}
+   <h2>
+      Question 6
+   </h2>
+   {% set highest_participants = 0 %}
+   {% set highest_formation = '' %}
+   {% for formation in list %}
+   {% if formation.nb_participants > highest_participants %}
+   {% set highest_participants = formation.nb_participants %}
+   {% set highest_formation = formation.Titre %}
+   {% endif %}
+   {% endfor %}
+   le titre de la formation ayant le plus grand nombre de participants. est{{ highest_formation }}
+   <h2>
+      Question 7
+   </h2>
+   {% set total_participants = 0 %}
+   {% for formation in list %}
+   {% set total_participants = total_participants + formation.nb_participants %}
+   {% endfor %}
+   le nombre total de participants dans toutes les formations. est: 
+   {{ total_participants }}
+</div>
+<div>
+   <h2>
+      Question 8 & 9
+   </h2>
+   {% if list is empty %}
+   <p>There are no formations.</p>
+   {% else %}
+   <table>
+      <tr>
+         <th>
+            Reference
+         </th>
+         <th>
+            Titre
+         </th>
+         <th>
+            Description
+         </th>
+         <th>
+            date_debut
+         </th>
+         <th>
+            date_fin
+         </th>
+         <th>
+            nb_participants
+         </th>
+         <th>
+            Action
+         </th>
+      </tr>
+      {% for item in list %}
+      <tr>
+         <td>
+            {{ item.ref }}
+         </td>
+         <td>
+            {{ item.Titre }}
+         </td>
+         <td>
+            {{ item.Description }}
+         </td>
+         <td>
+            {{ item.date_debut }}
+         </td>
+         <td>
+            {{ item.date_fin }}
+         </td>
+         <td>
+            {{ item.nb_participants }}
+         </td>
+         <td>
+            {% if item.nb_participants == 0 %}
+            <button>participer</button>
+            {% endif %}
+         </td>
+      </tr>
+      {% endfor %}
+   </table>
+   {% endif %}
+</div>
